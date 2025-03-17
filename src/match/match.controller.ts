@@ -55,4 +55,5 @@ export class MatchController {
     async deleteMatch(@Param('id') id: number) {
         return this.matchService.deleteMatch(id);
     }
+
 }

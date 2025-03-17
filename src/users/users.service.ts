@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -81,6 +81,19 @@ export class UsersService {
         }
         return user;
     }
+
+    async updateUser(id: number, data: Partial<User>) {
+        const user = await this.userRepository.findOne({ where: { id } });
+
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        await this.userRepository.update(id, data);
+
+        return this.userRepository.findOne({ where: { id } }); 
+    }
+
 
 
 }

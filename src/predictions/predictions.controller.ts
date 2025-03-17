@@ -19,9 +19,13 @@ export class PredictionController {
 
     @Post()
     addPrediction(
-        @Body() predictionData:{matchId: number, predictionText:string}
+        @Body() predictionData: { matchId: number; teamId: number; predictionText: string }
     ): Promise<Prediction> {
-        return this.predictionService.addPrediction(predictionData.matchId, predictionData.predictionText);
+        return this.predictionService.addPrediction(
+            predictionData.matchId,
+            predictionData.teamId,
+            predictionData.predictionText
+        );
     }
 
     @Patch(':id')
